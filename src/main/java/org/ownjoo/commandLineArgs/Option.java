@@ -1,5 +1,8 @@
 package org.ownjoo.commandLineArgs;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +51,21 @@ public class Option
     public void addData(List<String> data)
     {
         this.data.addAll(data);
+    }
+
+    public String toString()
+    {
+        String result = "";
+        ObjectMapper objectMapper = new ObjectMapper();
+        try
+        {
+            result = objectMapper.writeValueAsString(this);
+        }
+        catch(JsonProcessingException j)
+        {
+            j.printStackTrace();
+        }
+
+        return result;
     }
 }

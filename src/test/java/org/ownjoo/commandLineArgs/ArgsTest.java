@@ -10,10 +10,14 @@ import static org.junit.Assert.*;
  */
 public class ArgsTest
 {
-    String  expOptionOne =   "-f",
-            expDataOne   =   "second",
-            expOptionTwo =   "--third",
-            expDataTwo   =   "fourth";
+    String  inOptionOne     =   "-f",
+            inDataOne       =   "second",
+            inOptionTwo     =   "--third",
+            inDataTwo       =   "fourth",
+            expOptionOne     =   "f",
+            expDataOne       =   "second",
+            expOptionTwo     =   "third",
+            expDataTwo       =   "fourth";
 
     @Test
     public void shouldConstruct()
@@ -31,9 +35,8 @@ public class ArgsTest
     @Test
     public void shouldReturnListOfOptions()
     {
-        String[] strings = {expOptionOne, expDataOne, expOptionTwo, expDataTwo};
+        String[] strings = {inOptionOne, inDataOne, inOptionTwo, inDataTwo};
         Args args = new Args(strings);
-        System.out.println(args);
 
         List<Option> actual = args.getOptions();
         assertNotNull(actual);
@@ -43,13 +46,13 @@ public class ArgsTest
     @Test
     public void shouldReturnCorrectListOfOptions()
     {
-        String[] strings = {expOptionOne, expDataOne, expOptionTwo, expDataTwo};
+        String[] strings = {inOptionOne, inDataOne, inOptionTwo, inDataTwo};
         Args args = new Args(strings);
 
         List<Option> actual = args.getOptions();
         assertTrue(expOptionOne.equals(actual.get(0).getOption()));
-        assertTrue(expDataOne.equals(actual.get(0).getData()));
+        assertTrue(expDataOne.equals(actual.get(0).getData().get(0)));
         assertTrue(expOptionTwo.equals(actual.get(1).getOption()));
-        assertTrue(expDataTwo.equals(actual.get(1).getData()));
+        assertTrue(expDataTwo.equals(actual.get(1).getData().get(0)));
     }
 }

@@ -2,7 +2,6 @@ package org.ownjoo.commandLineArgs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,12 +42,13 @@ public class Args
         String temp;
         Option option = new Option();
 
-        for (String arg : args) {
+        for (String arg : args)
+        {
             temp = arg;
             if (arg.charAt(0) == '-')
             {
                 // if the next arg is a new option, save the existing one
-                if (!"".equals(option.getOption()) || !"".equals(option.getData()))
+                if (!"".equals(option.getOption()) || option.getData().size() > 0)
                 {
                     this.options.add(option);
                     option = new Option();
@@ -57,11 +57,11 @@ public class Args
             }
             else
             {
-                //System.out.println("option.getOption(): " + option.getOption());
-                //System.out.println("option.getData(): " + option.getData());
-                option.getData().add(arg);
+                option.getData().add(temp);
             }
         }
+        if (!"".equals(option.getOption()) || option.getData().size() > 0)
+            this.options.add(option);
     }
 
     public String toString()
@@ -70,8 +70,6 @@ public class Args
         ObjectMapper objectMapper = new ObjectMapper();
         try
         {
-            //System.out.println(objectMapper.writeValueAsString(this.args));
-            //System.out.println(objectMapper.writeValueAsString(this.options));
             result = objectMapper.writeValueAsString(this.options);
         }
         catch(JsonProcessingException j)
