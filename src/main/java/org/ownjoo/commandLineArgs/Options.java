@@ -5,25 +5,46 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Speedy on 4/5/2017.
  */
-public class Args
+public class Options
 {
     private List<String> args;
     private List<Option> options;
 
-    public Args()
+    public Options()
     {
         this.options = new ArrayList<>();
         this.args = new ArrayList<>();
     }
 
-    public Args (String[] args)
+    public Options(String[] args)
     {
         this.options = new ArrayList<>();
         setArgs(args);
+    }
+
+    public boolean exists(String key)
+    {
+        return !options.stream()
+                .filter((a) -> a.getOption().contains(key))  // if there's an option matching the key
+                .collect(Collectors.toList())                // put it in a short List<Option>
+                .isEmpty();                                  // and check if it's there
+    }
+
+    public Option getOption(String key)
+    {
+        Option result = null;
+        if(exists(key))
+            result = options.stream()
+                    .filter((a) -> a.getOption().contains(key))  // if there's an option matching the key
+                    .collect(Collectors.toList())                // put it in a short List<Option>
+                    .get(0);                                     // get the first Option
+
+        return result;
     }
 
     public List<Option> getOptions()

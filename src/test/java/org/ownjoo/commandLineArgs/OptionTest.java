@@ -13,12 +13,6 @@ import static org.junit.Assert.*;
  */
 public class OptionTest
 {
-    @Test
-    public void shouldConstruct()
-    {
-        assertNotNull(new Option());
-    }
-
     @Test public void shouldReturnDataListReference()
     {
         Option actual = new Option();
